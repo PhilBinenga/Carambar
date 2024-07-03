@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors'); // Ajoutez cette ligne
-const setupSwagger = require('./swagger/swagger'); // Importez votre configuration Swagger
+const cors = require('cors'); 
+const setupSwagger = require('./swagger/swagger'); 
 const jokesRouter = require('./routes/jokes');
 
 const app = express();

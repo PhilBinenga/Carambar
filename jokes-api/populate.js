@@ -16,7 +16,7 @@ const jokes = [
 
 const populateDB = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/jokesDB'); // Utilisez le nom correct ici
+    await mongoose.connect('mongodb://localhost:27017/jokesDB'); 
     console.log('MongoDB connected');
     
     await Joke.deleteMany({});
