@@ -1,27 +1,28 @@
-const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
+// Définissez les options pour swagger-jsdoc
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'Jokes API',
+      title: 'API Carambar Blagues',
       version: '1.0.0',
-      description: 'A simple Express API for jokes',
+      description: 'API pour gérer des blagues',
     },
     servers: [
       {
-        url: 'http://localhost:3000', // Change this to your server's URL if different
+        url: 'http://localhost:3001', 
       },
     ],
   },
-  apis: ['./routes/*.js'], // Change this to the path where your route files are located
+  apis: ['./routes/*.js'], // Chemin vers les fichiers contenant des commentaires Swagger
 };
 
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
-const swaggerSetup = (app) => {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+const setupSwagger = (app) => {
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 };
 
-module.exports = swaggerSetup;
+module.exports = setupSwagger;

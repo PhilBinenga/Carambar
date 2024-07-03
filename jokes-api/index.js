@@ -1,32 +1,23 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const connectDB = require('./config/database');
+const mongoose = require('mongoose');
+const cors = require('cors'); // Ajoutez cette ligne
+const setupSwagger = require('./swagger/swagger'); // Importez votre configuration Swagger
 const jokesRouter = require('./routes/jokes');
-const path = require('path');
-const cors = require('cors'); // Ajoutez ceci
 
 const app = express();
 
-// Connect to database
-connectDB();
+// Configurez CORS
+app.use(cors()); 
 
-// Middleware
-app.use(bodyParser.json());
+app.use(express.json());
+setupSwagger(app); // Appelez la fonction pour configurer Swagger
+app.use('/blagues', jokesRouter);
 
-// Enable CORS
-app.use(cors()); // Ajoutez ceci
+mongoose.connect('mongodb://localhost:27017/jokesDB')
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
-// Routes
-app.use('/', jokesRouter);
-
-// Serve static files
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Swagger setup
-const swaggerSetup = require('./swagger/swagger');
-swaggerSetup(app);
-
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
